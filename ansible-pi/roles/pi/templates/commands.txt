@@ -1,6 +1,0 @@
-look (how to look around, aka ls)
-move <name of folder> (how to move into a room, aka cd)
-back (how to move backwards out of a room, aka cd ..)
-see <name of file> (how to see a file, aka cat)
-where (to see what folder you are in, aka pwd)
-map (brings up a map of oasis)

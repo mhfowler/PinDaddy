@@ -6,3 +6,4 @@ npm-debug.log
 *.txt.swp
 secret*
 secret_files/*
+playbook.retry

@@ -2,25 +2,16 @@ var ngrok = require('ngrok');
 var util = require('util');
 var secrets = require('../ansible-pi/secret_files/secret.json');
 var Slack = require('slack-node');
-var twitter_helper = require('./twitter_helper.js');
-
 
 apiToken = secrets['CITIGROUP_SLACKBOT_TOKEN'];
 slack = new Slack(apiToken);
 
 var send_slack_message = function(msg) {
 	console.log(msg);
-	//slack.api('chat.postMessage', {
-	//	text: msg,
-	//	channel: '#oasis',
-	//	username: "oasis",
-	//	link_names: 1
-	//}, function (err, response) {
-	//});
-	clSlack.api('chat.postMessage', {
+	slack.api('chat.postMessage', {
 		text: msg,
 		channel: '#oasis',
-		username: "oasis_bot",
+		username: "oasis",
 		link_names: 1
 	}, function (err, response) {
 	});
@@ -46,5 +37,4 @@ ngrok.connect({
 	var match = myRegexp.exec(url);
 	var cmd_str = util.format('ssh swim@%s -p%s', match[1], match[2]);
 	send_slack_message('++ ' + cmd_str);
-	twitter_helper.post_tweet(cmd_str);
 });

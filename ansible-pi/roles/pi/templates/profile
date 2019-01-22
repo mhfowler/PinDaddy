@@ -35,7 +35,5 @@ fi
 
 
 TEMPLATES=/srv/oasis/ansible-pi/roles/pi/templates/
-# aliases
 
-# print out prompt to type guide
-cat $TEMPLATES/guide_prompt.txt
+# aliases

@@ -1,12 +1,13 @@
 ---
-- name: 'Configure WIFI'
-  copy: src=secret_files/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600
+# configure wifi is no longer necessary, because latest raspbian includes this
+#- name: 'Configure WIFI'
+#  copy: src=secret_files/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600
 
-- name: 'Update APT package cache'
-  action: apt update_cache=yes
+#- name: 'Update APT package cache'
+#  action: apt update_cache=yes
 
-- name: 'Upgrade APT to the latest packages'
-  action: apt upgrade=safe
+#- name: 'Upgrade APT to the latest packages'
+#  action: apt upgrade=safe
 
 - name: 'Ensure log directory'
   action: file dest={{log_dir}} state=directory mode=777
@@ -30,6 +31,23 @@
 - name: 'Ensure secret_files directory'
   action: file dest={{src_dir}}/ansible-pi/secret_files state=directory
 
+- name: 'Install tools for adding PPA repositories'
+  become: true
+  apt:
+    name: software-properties-common
+    state: latest
+
+- name: 'Install Python dependencies'
+  become: true
+  apt:
+    name:
+      - libffi-dev
+      - gcc
+      - openssl
+      - libssl-dev
+    state: latest
+    update_cache: true
+
 - name: 'install python requirements'
   action: pip requirements={{src_dir}}/requirements.txt state=present
 
@@ -52,32 +70,18 @@
 #- name: 'Update Aptitude'
 #  apt: update_cache=yes cache_valid_time=3600
 
-- name: 'install node'
-  action: apt pkg=$item state=installed
-  with_items:
-    - node
-    - npm
-
-- name: 'install imageviewers'
-  action: apt pkg=$item state=installed
-  with_items:
-    - imagemagick
-    - caca-utils
+- name: 'node'
+  become: true
+  apt:
+    name:
+      - node
+      - npm
+    state: latest
+    update_cache: true
 
 # https://www.npmjs.com/package/ngrok
 - name: Install packages based on package.json.
   npm: path={{src_dir}}
-
-
-# install ytalk
-- name: 'install ytalk'
-  action: apt pkg=$item state=installed
-  with_items:
-    - ytalk
-
-# copy over inted.conf
-- name: 'Copy inetd.conf'
-  action: template src=templates/inetd.conf dest=/etc/inetd.conf
 
   # copy over /etc/profile
 - name: 'Copy profile'

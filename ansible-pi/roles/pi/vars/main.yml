@@ -1,7 +1,7 @@
 app_name: hello_pi
-repo_url: git@github.com:mhfowler/oasis.git
+repo_url: git@github.com:mhfowler/PinDaddy.git
 repo_remote: origin
 repo_branch: master
-src_dir: /srv/oasis
+src_dir: /srv/pin_daddy
 log_dir: /srv/log
 data_dir: /srv/data
