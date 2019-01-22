@@ -45,6 +45,7 @@
       - gcc
       - openssl
       - libssl-dev
+      - rng-tools
     state: latest
     update_cache: true
 

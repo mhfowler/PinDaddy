@@ -41,7 +41,7 @@ def announce_ip():
             print routes
             print '++ endroutes'
             if ip_address:
-                slack_notify_message('@channel: its pin-daddy-pi: {} | {}'.format(str(ip_address), str(current_connection)))
+                slack_notify_message('@channel: its pd-pi: {} | {}'.format(str(ip_address), str(current_connection)))
                 break
         except Exception as e:
             print ':/ error: {}'.format(str(e.message))
