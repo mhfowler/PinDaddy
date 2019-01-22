@@ -70,14 +70,15 @@
 #- name: 'Update Aptitude'
 #  apt: update_cache=yes cache_valid_time=3600
 
-- name: 'node'
-  become: true
-  apt:
-    name:
-      - node
-      - npm
-    state: latest
-    update_cache: true
+# this part didn't work.. need better way to install node
+#- name: 'node'
+#  become: true
+#  apt:
+#    name:
+#      - node
+#      - npm
+#    state: latest
+#    update_cache: true
 
 # https://www.npmjs.com/package/ngrok
 - name: Install packages based on package.json.
