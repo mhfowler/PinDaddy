@@ -1,6 +1,8 @@
 import serial
 import time
 
+RPI = True
+
 def click(s):
     s.write(b'G90 G1 Z24 F3600\n')
     grbl_out = s.readline()
@@ -30,7 +32,10 @@ def move(s, x=None, y=None):
 def block_phone():
 
     # change ACM number as found from ls /dev/tty/ACM*
-    s = serial.Serial("/dev/tty.usbmodem14101", 115200)
+    if RPI:
+        s = serial.Serial("/dev/ttyUSB5", 115200)
+    else:
+        s = serial.Serial("/dev/tty.usbmodem14101", 115200)
 
     # Wake up grbl
     s.write("\r\n\r\n")
@@ -68,12 +73,12 @@ def block_phone():
 
 
 if __name__ == '__main__':
-    DEBUG = False
-    if not DEBUG:
+    if RPI:
         import RPi.GPIO as GPIO
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         while True:
+            print('++ waiting for button press')
             input_state = GPIO.input(18)
             if input_state == False:
                 print('++ button Pressed')
