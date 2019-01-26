@@ -46,6 +46,7 @@
       - openssl
       - libssl-dev
       - rng-tools
+      - python-rpi.gpio
     state: latest
     update_cache: true
 
