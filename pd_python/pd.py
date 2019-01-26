@@ -31,11 +31,13 @@ def move(s, x=None, y=None):
 
 def block_phone():
 
+    print '++ attempting to block phone'
     # change ACM number as found from ls /dev/tty/ACM*
     if RPI:
         s = serial.Serial("/dev/ttyUSB5", 115200)
     else:
         s = serial.Serial("/dev/tty.usbmodem14101", 115200)
+    print '++ connected to serial'
 
     # Wake up grbl
     s.write("\r\n\r\n")
