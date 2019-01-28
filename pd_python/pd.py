@@ -15,7 +15,7 @@ phones = {
 # Define your callback
 def rt_callback(scale_position):
     phone = phones.get(int(scale_position))
-    print('The selected phone is'.format(phone))
+    print('The selected phone is {}'.format(phone))
 
 
 def click(s):
