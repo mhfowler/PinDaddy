@@ -6,6 +6,7 @@ ThermalPrinter = adafruit_thermal_printer.get_printer_class(2.68)
 
 printer = ThermalPrinter(uart)
 
+
 def print_number(number):
     printer.print('Thank you using Pin Daddy')
     printer.feed(2)
@@ -14,4 +15,4 @@ def print_number(number):
 
 
 if __name__ == '__main__':
-    print_number(1234)
+    print_number(123456789012)
