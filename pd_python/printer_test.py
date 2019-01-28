@@ -6,6 +6,7 @@ from unidecode import unidecode
 import HTMLParser
 
 
+print('++ initializing printer')
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 print('++ printer initialized')
 # printer.upsideDownOn()
