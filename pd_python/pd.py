@@ -1,7 +1,11 @@
 import serial
 import time
 
-RPI = False
+RPI = True
+
+# Define your callback
+def rt_callback(scale_position):
+    print('Hello world! The scale position is {}'.format(scale_position))
 
 def click(s):
     pen_down(s)
@@ -83,40 +87,50 @@ def block_phone():
 
 if __name__ == '__main__':
     if RPI:
+        import RPi.GPIO as GPIO
+        from pyky040 import pyky040
         try:
-            import RPi.GPIO as GPIO
 
-            btn = 23
             clk = 17
             dt = 18
+            btn = 23
 
             # setup button
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+            # Init the encoder pins
+            my_encoder = pyky040.Encoder(CLK=17, DT=18, SW=27)
+
+            # Setup the options and callbacks (see documentation)
+            my_encoder.setup(scale_min=0, scale_max=100, step=1, chg_callback=rt_callback)
+
+            # Launch the listener
+            my_encoder.watch()
+
             # setup rotary encoder
-            GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            counter = 0
-            clkLastState = GPIO.input(clk)
+            # GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            # GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            # counter = 0
+            # clkLastState = GPIO.input(clk)
 
             while True:
                 # waiting for input
                 print('++ waiting for input')
 
-                # check rotary encoder
-                clk_state = GPIO.input(clk)
-                dt_state = GPIO.input(dt)
-                print '++ clk_state: {}'.format(clk_state)
-                print '++ dt_state: {}'.format(dt_state)
-                if clk_state != clkLastState:
-                    if dt_state != clk_state:
-                        counter += 1
-                    else:
-                        counter -= 1
-                print 'rotary_counter: {}'.format(counter)
-                clkLastState = clk_state
-                time.sleep(0.01)
+                # # check rotary encoder
+                # clk_state = GPIO.input(clk)
+                # dt_state = GPIO.input(dt)
+                # print '++ clk_state: {}'.format(clk_state)
+                # print '++ dt_state: {}'.format(dt_state)
+                # if clk_state != clkLastState:
+                #     if dt_state != clk_state:
+                #         counter += 1
+                #     else:
+                #         counter -= 1
+                # print 'rotary_counter: {}'.format(counter)
+                # clkLastState = clk_state
+                # time.sleep(0.01)
 
                 # check button
                 input_state = GPIO.input(btn)
