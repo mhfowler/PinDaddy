@@ -11,8 +11,8 @@ def print_number(number):
     printer.print('Thank you using Pin Daddy')
     printer.feed(2)
 
-    printer.print_barcode(str(number), printer.UPC_A)
+    printer.print_barcode(str(number), printer.ITF)
 
 
 if __name__ == '__main__':
-    print_number(123456789012)
+    print_number(12345678901234)
