@@ -1,5 +1,6 @@
 import serial
 import time
+import threading
 
 RPI = True
 
@@ -103,34 +104,18 @@ if __name__ == '__main__':
             my_encoder = pyky040.Encoder(CLK=17, DT=18, SW=27)
 
             # Setup the options and callbacks (see documentation)
-            my_encoder.setup(scale_min=0, scale_max=100, step=1, chg_callback=rt_callback)
+            my_encoder.setup(scale_min=0, scale_max=100, step=2, loop=True, chg_callback=rt_callback)
 
             # Launch the listener
-            my_encoder.watch()
+            my_thread = threading.Thread(target=my_encoder.watch)
 
-            # setup rotary encoder
-            # GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            # GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            # counter = 0
-            # clkLastState = GPIO.input(clk)
+            # Launch the thread
+            my_thread.start()
+            print '++ rotary encoder initialized'
 
             while True:
                 # waiting for input
                 print('++ waiting for input')
-
-                # # check rotary encoder
-                # clk_state = GPIO.input(clk)
-                # dt_state = GPIO.input(dt)
-                # print '++ clk_state: {}'.format(clk_state)
-                # print '++ dt_state: {}'.format(dt_state)
-                # if clk_state != clkLastState:
-                #     if dt_state != clk_state:
-                #         counter += 1
-                #     else:
-                #         counter -= 1
-                # print 'rotary_counter: {}'.format(counter)
-                # clkLastState = clk_state
-                # time.sleep(0.01)
 
                 # check button
                 input_state = GPIO.input(btn)
