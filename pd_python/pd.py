@@ -1,12 +1,16 @@
 import serial
 import time
 
-RPI = True
+RPI = False
 
 def click(s):
-    s.write(b'G90 G1 Z24 F3600\n')
-    grbl_out = s.readline()
+    pen_down(s)
+    # then pen half up
     s.write(b'G90 G1 Z20 F3600\n')
+    grbl_out = s.readline()
+
+def pen_down(s):
+    s.write(b'G90 G1 Z24 F3600\n')
     grbl_out = s.readline()
 
 def pen_up(s):
@@ -57,8 +61,11 @@ def block_phone():
     move(s, x=23)
     click(s)
 
+    # end with pen-down
+    pen_down(s)
+
     # now go back home
-    home(s)
+    # home(s)
     s.close()
     print ('++ gcode sent')
 
@@ -76,14 +83,47 @@ def block_phone():
 
 if __name__ == '__main__':
     if RPI:
-        import RPi.GPIO as GPIO
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        while True:
-            print('++ waiting for button press')
-            input_state = GPIO.input(18)
-            if input_state == False:
-                print('++ button Pressed')
-                block_phone()
+        try:
+            import RPi.GPIO as GPIO
+
+            btn = 23
+            clk = 17
+            dt = 18
+
+            # setup button
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+            # setup rotary encoder
+            GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            counter = 0
+            clkLastState = GPIO.input(clk)
+
+            while True:
+                # waiting for input
+                print('++ waiting for input')
+
+                # check rotary encoder
+                clk_state = GPIO.input(clk)
+                dt_state = GPIO.input(dt)
+                print '++ clk_state: {}'.format(clk_state)
+                print '++ dt_state: {}'.format(dt_state)
+                if clk_state != clkLastState:
+                    if dt_state != clk_state:
+                        counter += 1
+                    else:
+                        counter -= 1
+                print 'rotary_counter: {}'.format(counter)
+                clkLastState = clk_state
+                time.sleep(0.01)
+
+                # check button
+                input_state = GPIO.input(btn)
+                if input_state == False:
+                    print('++ button Pressed')
+                    block_phone()
+        finally:
+            GPIO.cleanup()
     else:
         block_phone()
