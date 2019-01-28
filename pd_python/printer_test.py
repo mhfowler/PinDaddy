@@ -7,10 +7,10 @@ import HTMLParser
 
 
 print('++ initializing printer')
-printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
+printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 print('++ printer initialized')
 # printer.upsideDownOn()
-# printer.printMode = 46  # font size, slightly bolder font
+printer.printMode = 46  # font size, slightly bolder font
 # printer.writePrintMode()
 
 
