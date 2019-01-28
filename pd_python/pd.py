@@ -4,9 +4,19 @@ import threading
 
 RPI = True
 
+phones = {
+    0: 'iphone 6',
+    1: 'iphone 7',
+    2: 'iphone 7+',
+    3: 'samsung galaxy'
+}
+
+
 # Define your callback
 def rt_callback(scale_position):
-    print('Hello world! The scale position is {}'.format(scale_position))
+    phone = phones.get(scale_position)
+    print('The selected phone is'.format(phone))
+
 
 def click(s):
     pen_down(s)
@@ -14,13 +24,16 @@ def click(s):
     s.write(b'G90 G1 Z20 F3600\n')
     grbl_out = s.readline()
 
+
 def pen_down(s):
     s.write(b'G90 G1 Z24 F3600\n')
     grbl_out = s.readline()
 
+
 def pen_up(s):
     s.write(b'G90 G1 Z19 F3600\n')
     grbl_out = s.readline()
+
 
 def home(s):
     pen_up(s)
@@ -104,7 +117,7 @@ if __name__ == '__main__':
             my_encoder = pyky040.Encoder(CLK=17, DT=18, SW=27)
 
             # Setup the options and callbacks (see documentation)
-            my_encoder.setup(scale_min=0, scale_max=100, step=2, loop=True, chg_callback=rt_callback)
+            my_encoder.setup(scale_min=0, scale_max=3, step=1, loop=True, chg_callback=rt_callback)
 
             # Launch the listener
             my_thread = threading.Thread(target=my_encoder.watch)
