@@ -135,6 +135,8 @@ if __name__ == '__main__':
                 if input_state == False:
                     print('++ button Pressed')
                     block_phone()
+                else:
+                    time.sleep(0.1)
         finally:
             GPIO.cleanup()
     else:
