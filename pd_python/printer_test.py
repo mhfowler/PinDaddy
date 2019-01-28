@@ -7,7 +7,8 @@ import HTMLParser
 
 
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
-printer.upsideDownOn()
+print('++ printer initialized')
+# printer.upsideDownOn()
 # printer.printMode = 46  # font size, slightly bolder font
 # printer.writePrintMode()
 
@@ -25,6 +26,8 @@ def rprint(msg, screen_name='test'):
     # Remove HTML escape sequences
     # and remap Unicode values to nearest ASCII equivalents
     text = unidecode(HTMLParser.HTMLParser().unescape(msg))
+
+    print('++ printing on printer')
     r_text = printer.textWrapped(text)
 
     printer.print(r_text)
