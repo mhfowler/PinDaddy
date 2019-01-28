@@ -12,17 +12,22 @@ phones = {
 }
 
 
-# Define your callback
-def rt_callback(scale_position):
-    phone = phones.get(int(scale_position))
-    print('The selected phone is {}'.format(phone))
+class PD:
+    def __init__(self):
+        self.selected_phone = 'iphone 6'
+
+    # Define your callback
+    def rt_callback(self, scale_position):
+        phone = phones.get(int(scale_position))
+        if phone != self.selected_phone:
+            self.selected_phone = phone
+            print('The selected phone is {}'.format(phone))
 
 
 def click(s):
     pen_down(s)
     # then pen half up
     s.write(b'G90 G1 Z20 F3600\n')
-    grbl_out = s.readline()
 
 
 def pen_down(s):
@@ -101,6 +106,8 @@ def block_phone():
 
 if __name__ == '__main__':
     if RPI:
+        pd = PD()
+
         import RPi.GPIO as GPIO
         from pyky040 import pyky040
         try:
@@ -117,7 +124,7 @@ if __name__ == '__main__':
             my_encoder = pyky040.Encoder(CLK=17, DT=18, SW=27)
 
             # Setup the options and callbacks (see documentation)
-            my_encoder.setup(scale_min=0, scale_max=3, step=1, loop=True, chg_callback=rt_callback)
+            my_encoder.setup(scale_min=0, scale_max=3, step=1, loop=True, chg_callback=pd.rt_callback)
 
             # Launch the listener
             my_thread = threading.Thread(target=my_encoder.watch)
