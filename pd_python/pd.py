@@ -32,6 +32,9 @@ class PD:
         self.serial.flushInput()  # Flush startup text in serial input
         print('++ grbl initialized')
 
+        #  unlock
+        self.write('$X\n')
+
         # then home
         self.home()
 
@@ -66,6 +69,7 @@ class PD:
         grbl_out = self.serial.readline()
 
     def home(self):
+        print('++ homing')
         self.pen_up()
         self.write('$H\n')
         grbl_out = self.serial.readline()
