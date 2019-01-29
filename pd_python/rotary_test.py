@@ -23,7 +23,8 @@ def get_rot_value():
     for rot in rots:
         val = GPIO.input(rot)
         rd[rot] = val
-        set_of_true_vals.add(rot)
+        if val:
+            set_of_true_vals.add(rot)
 
     print('true_vals: {}'.format(set_of_true_vals))
 
