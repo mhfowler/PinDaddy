@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
             for rot in rots:
                 print('{}: {}'.format(rot, GPIO.input(rot)))
-                time.sleep(2)
+            time.sleep(2)
 
     finally:
         GPIO.cleanup()
