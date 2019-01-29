@@ -18,16 +18,31 @@ rots = [
 
 
 def get_rot_value():
-    rot_dict = {}
+    rd = {}
+    set_of_true_vals = set([])
     for rot in rots:
         val = GPIO.input(rot)
-        print('{}: {}'.format(rot, val))
-        rot_dict[rot] = val
+        rd[rot] = val
+        set_of_true_vals.add(rot)
 
-
-
-
-
+    set1 = {5, 6, 19, 26, 12, 16, 21}
+    set2 = {5, 6, 19, 26, 12, 20, 21}
+    set3 = {5, 6, 19, 12, 16, 20, 21}
+    set4 = {5, 19, 26, 12, 16, 20, 21}
+    set5 = {5, 6, 19, 26, 16, 20, 21}
+    if set1 == set_of_true_vals:
+        return 1
+    elif set2 == set_of_true_vals:
+        return 2
+    elif set3 == set_of_true_vals:
+        return 3
+    elif set4 == set_of_true_vals:
+        return 4
+    elif set5 == set_of_true_vals:
+        return 5
+    else:
+        print('++ unexpected rotary value')
+        return 0
 
 if __name__ == '__main__':
     import RPi.GPIO as GPIO
@@ -50,6 +65,7 @@ if __name__ == '__main__':
             # waiting for input
             print('++ waiting for input')
             rot_val = get_rot_value()
+            print('++ rot_val: {}'.format(rot_val))
             time.sleep(2)
 
     finally:
