@@ -5,6 +5,8 @@ import random
 
 
 RPI = True
+if RPI:
+    from pyky040 import pyky040
 
 phones = {
     0: 'iphone 6',
@@ -21,7 +23,7 @@ class PD:
         # initialize grbl and home
         # change ACM number as found from ls /dev/tty/ACM*
         if RPI:
-            self.serial = Serial("/dev/tty4", 115200)
+            self.serial = Serial("/dev/ttyACM0", 115200)
         else:
             self.serial = Serial("/dev/tty.usbmodem14101", 115200)
         print('++ connected to serial')
@@ -115,7 +117,6 @@ if __name__ == '__main__':
     pd = PD()
     if RPI:
         import RPi.GPIO as GPIO
-        from pyky040 import pyky040
 
         try:
 
