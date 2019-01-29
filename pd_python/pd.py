@@ -50,7 +50,8 @@ class PD:
     def print_pin(self, pin):
         if RPI:
             from pd_python import printer_helper
-            printer_helper.print_pin(pin)
+            print('++ printing pin: {}'.format(pin))
+            printer_helper.print_pin(str(pin))
         else:
             print('++ pin: {}'.format(pin))
 

@@ -10,7 +10,7 @@ printer = ThermalPrinter(uart)
 def print_pin(number):
     printer.print('Thank you using Pin Daddy')
     printer.feed(2)
-    encoded_number = '00000000{}'.format(str(number))
+    encoded_number = '0000000000{}'.format(str(number))
     printer.print_barcode(encoded_number, printer.ITF)
     printer.feed(2)
 
