@@ -1,4 +1,4 @@
-from adafruit_thermal_printer.thermal_printer import JUSTIFY_LEFT, \
+from afruit_thermal_printer.thermal_printer import JUSTIFY_LEFT, \
 JUSTIFY_CENTER, JUSTIFY_RIGHT, SIZE_SMALL, SIZE_MEDIUM, SIZE_LARGE, \
 UNDERLINE_THIN, UNDERLINE_THICK
 
