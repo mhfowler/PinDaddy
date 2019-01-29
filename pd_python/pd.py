@@ -21,7 +21,7 @@ class PD:
         # initialize grbl and home
         # change ACM number as found from ls /dev/tty/ACM*
         if RPI:
-            self.serial = Serial("/dev/ttyUSB5", 115200)
+            self.serial = Serial("/dev/tty4", 115200)
         else:
             self.serial = Serial("/dev/tty.usbmodem14101", 115200)
         print('++ connected to serial')
@@ -30,6 +30,7 @@ class PD:
         self.write('\r\n\r\n')
         time.sleep(2)  # Wait for grbl to initialize
         self.serial.flushInput()  # Flush startup text in serial input
+        print('++ grbl initialized')
 
         # then home
         self.home()
