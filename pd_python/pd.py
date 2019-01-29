@@ -61,14 +61,14 @@ class PD:
     def click(self):
         self.pen_down()
         # then pen half up
-        self.write('G90 G1 Z20 F3600\n')
+        self.write('G90 G1 Z27 F3600\n')
 
     def pen_down(self):
-        self.write('G90 G1 Z24 F3600\n')
+        self.write('G90 G1 Z29 F3600\n')
         grbl_out = self.serial.readline()
 
     def pen_up(self):
-        self.write('G90 G1 Z19 F3600\n')
+        self.write('G90 G1 Z20 F3600\n')
         grbl_out = self.serial.readline()
 
     def home(self):
