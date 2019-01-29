@@ -32,7 +32,7 @@ def get_rot_value():
     set2 = {5, 6, 19, 26, 12, 20, 21}
     set3 = {5, 6, 19, 12, 16, 20, 21}
     set4 = {5, 19, 26, 12, 16, 20, 21}
-    set5 = {5, 6, 19, 26, 16, 20, 21}
+    set5 = {5, 6, 12, 16, 19, 20, 26}
     if set1 == set_of_true_vals:
         return 1
     elif set2 == set_of_true_vals:
