@@ -2,6 +2,7 @@ from serial import Serial
 import time
 import threading
 import random
+from pd_python.rotary_test import get_rot_value
 
 
 RPI = True
@@ -9,10 +10,10 @@ if RPI:
     from pyky040 import pyky040
 
 phones = {
-    0: 'iphone 6',
-    1: 'iphone 7',
-    2: 'iphone 7+',
-    3: 'samsung galaxy'
+    1: 'iphone 6',
+    2: 'iphone 7',
+    3: 'iphone 7+',
+    4: 'samsung galaxy'
 }
 
 
@@ -39,13 +40,6 @@ class PD:
 
         # then home
         self.home()
-
-    # Define your callback
-    def rt_callback(self, scale_position):
-        phone = phones.get(int(scale_position))
-        if phone != self.selected_phone:
-            self.selected_phone = phone
-            print('The selected phone is {}'.format(phone))
 
     def print_pin(self, pin):
         if RPI:
@@ -87,7 +81,12 @@ class PD:
 
     def block_phone(self):
 
-        print('++ attempting to block phone')
+        if RPI:
+            rot_value = get_rot_value()
+        else:
+            rot_value = 1
+        self.phone = phones[rot_value]
+        print('++ attempting to block phone: {}', self.phone)
 
         # first select random pin
         pin = random.randint(0, 9999)
@@ -127,19 +126,6 @@ if __name__ == '__main__':
             # setup button
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-            # Init the encoder pins
-            my_encoder = pyky040.Encoder(CLK=17, DT=18, SW=27)
-
-            # Setup the options and callbacks (see documentation)
-            my_encoder.setup(scale_min=0, scale_max=3, step=1, loop=True, chg_callback=pd.rt_callback)
-
-            # Launch the listener
-            my_thread = threading.Thread(target=my_encoder.watch)
-
-            # Launch the thread
-            my_thread.start()
-            print('++ rotary encoder initialized')
 
             while True:
                 # waiting for input

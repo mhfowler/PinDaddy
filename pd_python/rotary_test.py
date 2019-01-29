@@ -26,7 +26,7 @@ def get_rot_value():
         if val:
             set_of_true_vals.add(rot)
 
-    print('true_vals: {}'.format(set_of_true_vals))
+    # print('true_vals: {}'.format(set_of_true_vals))
 
     set1 = {5, 6, 12, 19, 20, 21, 26}
     set2 = {5, 6, 12, 16, 19, 20, 21}
