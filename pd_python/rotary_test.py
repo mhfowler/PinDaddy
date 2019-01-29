@@ -38,7 +38,7 @@ if __name__ == '__main__':
             print('++ waiting for input')
 
             for rot in rots:
-                print('{}: {}').format(rot, GPIO.input(rot))
+                print('{}: {}'.format(rot, GPIO.input(rot)))
                 time.sleep(2)
 
     finally:
