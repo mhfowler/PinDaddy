@@ -2,6 +2,7 @@ from serial import Serial
 import time
 import threading
 import random
+import RPi.GPIO as GPIO
 
 rot5 = 5
 rot6 = 6
