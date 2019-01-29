@@ -7,13 +7,13 @@ ThermalPrinter = afruit_thermal_printer.get_printer_class(2.68)
 printer = ThermalPrinter(uart)
 
 
-def print_number(number):
+def print_pin(number):
     printer.print('Thank you using Pin Daddy')
     printer.feed(2)
-
-    printer.print_barcode(str(number), printer.UPC_A)
+    encoded_number = '00000000{}'.format(str(number))
+    printer.print_barcode(encoded_number, printer.ITF)
     printer.feed(2)
 
 
 if __name__ == '__main__':
-    print_number(123456789012)
+    print_pin(1234)
