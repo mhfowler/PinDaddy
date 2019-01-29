@@ -2,7 +2,7 @@ from serial import Serial
 import time
 import threading
 import random
-from pd_python.rotary_test import get_rot_value
+from pd_python.rotary_test import get_rot_value, rots
 
 
 RPI = True
@@ -126,6 +126,12 @@ if __name__ == '__main__':
             # setup button
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+            # setup rot
+
+            # setup rots
+            for rot in rots:
+                GPIO.setup(rot, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
             while True:
                 # waiting for input
