@@ -16,4 +16,4 @@ def print_number(number):
 
 
 if __name__ == '__main__':
-    print_number(12345678901234)
+    print_number(123456789012)
