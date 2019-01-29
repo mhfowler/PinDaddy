@@ -127,8 +127,6 @@ if __name__ == '__main__':
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-            # setup rot
-
             # setup rots
             for rot in rots:
                 GPIO.setup(rot, GPIO.IN, pull_up_down=GPIO.PUD_UP)

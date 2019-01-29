@@ -29,11 +29,12 @@ def get_rot_value():
 
     # print('true_vals: {}'.format(set_of_true_vals))
 
-    set1 = {5, 6, 12, 19, 20, 21, 26}
-    set2 = {5, 6, 12, 16, 19, 20, 21}
-    set3 = {5, 12, 16, 19, 20, 21, 26}
-    set4 = {5, 6, 16, 19, 20, 21, 26}
-    set5 = {5, 6, 12, 16, 19, 20, 26}
+    set1 = {5, 6, 12, 16, 19, 20, 21, 26}
+    set2 = {5, 6, 12, 19, 20, 21, 26}
+    set3 = {5, 6, 12, 16, 19, 20, 21}
+    set4 = {5, 12, 16, 19, 20, 21, 26}
+    set5 = {5, 6, 16, 19, 20, 21, 26}
+    set6 = {5, 6, 12, 16, 19, 20, 26}
     if set1 == set_of_true_vals:
         return 1
     elif set2 == set_of_true_vals:
@@ -44,6 +45,8 @@ def get_rot_value():
         return 4
     elif set5 == set_of_true_vals:
         return 5
+    elif set6 == set_of_true_vals:
+        return 6
     else:
         print('++ unexpected rotary value')
         return 0
