@@ -25,6 +25,8 @@ def get_rot_value():
         rd[rot] = val
         set_of_true_vals.add(rot)
 
+    print('true_vals: {}'.format(set_of_true_vals))
+
     set1 = {5, 6, 19, 26, 12, 16, 21}
     set2 = {5, 6, 19, 26, 12, 20, 21}
     set3 = {5, 6, 19, 12, 16, 20, 21}
