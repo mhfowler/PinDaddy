@@ -12,6 +12,7 @@ def print_number(number):
     printer.feed(2)
 
     printer.print_barcode(str(number), printer.UTC_A)
+    printer.feed(2)
 
 
 if __name__ == '__main__':
