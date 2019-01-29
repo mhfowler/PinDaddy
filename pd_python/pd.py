@@ -99,11 +99,11 @@ class PD:
         self.pen_up()
 
         # then go
-        self.move(x=20)
+        self.move(x=-20)
         self.move(y=35)
         self.click()
         self.move(y=45)
-        self.move(x=23)
+        self.move(x=-23)
         self.click()
 
         # now go back home
