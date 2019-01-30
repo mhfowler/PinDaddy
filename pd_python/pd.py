@@ -212,9 +212,8 @@ if __name__ == '__main__':
             for rot in rots:
                 GPIO.setup(rot, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+            print('++ beginning to wait for input')
             while True:
-                # waiting for input
-                print('++ waiting for input')
 
                 # check button
                 input_state = GPIO.input(btn)

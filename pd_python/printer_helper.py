@@ -13,7 +13,7 @@ def print_pin(number):
     printer.feed(2)
     encoded_number = '0000000000{}'.format(str(number))
     printer.print_barcode(encoded_number, printer.ITF)
-    printer.feed(2)
+    printer.feed(3)
 
 
 if __name__ == '__main__':
