@@ -8,6 +8,7 @@ printer = ThermalPrinter(uart)
 
 
 def print_pin(number):
+    printer.feed(3)
     printer.print('Thank you using Pin Daddy')
     printer.feed(2)
     encoded_number = '0000000000{}'.format(str(number))

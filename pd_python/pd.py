@@ -2,11 +2,11 @@ from serial import Serial
 import time
 import threading
 import random
-from pd_python.rotary_test import get_rot_value, rots
 
 
-RPI = True
+RPI = False
 if RPI:
+    from pd_python.rotary_test import get_rot_value, rots
     from pyky040 import pyky040
 
 phones = {
@@ -49,16 +49,85 @@ class PD:
         else:
             print('++ pin: {}'.format(pin))
 
+    def get_calibration(self):
+        phone_calibrations = {
+            'iphone 6': {
+                'column1x': -15.5,
+                'row1y': 35.5,
+                'column2x': -21.5,
+                'row2y': 38.5,
+                'column3x': -28,
+                'row3y': 41.5
+            }
+        }
+        if self.phone not in phone_calibrations:
+            print('++ not yet implemented')
+            return None
+        else:
+            return phone_calibrations[self.phone]
+
+    def press_number(self, num):
+        calibration = self.get_calibration()
+        if num == 1:
+            col = 1
+            row = 1
+            x_pos = calibration['column1x']
+            y_pos = calibration['row1y']
+        elif num == 2:
+            col = 2
+            row = 1
+            x_pos = calibration['column2x']
+            y_pos = calibration['row1y']
+        elif num == 3:
+            col = 3
+            row = 1
+            x_pos = calibration['column3x']
+            y_pos = calibration['row1y']
+        elif num == 4:
+            col = 1
+            row = 2
+            x_pos = calibration['column1x']
+            y_pos = calibration['row2y']
+        elif num == 5:
+            col = 2
+            row = 2
+            x_pos = calibration['column2x']
+            y_pos = calibration['row2y']
+        elif num == 6:
+            col = 3
+            row = 2
+            x_pos = calibration['column3x']
+            y_pos = calibration['row2y']
+        elif num == 7:
+            col = 1
+            row = 3
+            x_pos = calibration['column1x']
+            y_pos = calibration['row3y']
+        elif num == 8:
+            col = 2
+            row = 3
+            x_pos = calibration['column2x']
+            y_pos = calibration['row3y']
+        elif num == 9:
+            col = 3
+            row = 3
+            x_pos = calibration['column3x']
+            y_pos = calibration['row3y']
+        else:
+            raise Exception('Invalid number')
+        # move and click
+        self.move(x_pos, y_pos)
+        self.pen_down(row=row)
+        self.pen_up()
+
     def write(self, msg):
         self.serial.write(msg.encode())
 
-    def click(self):
-        self.pen_down()
-        # then pen half up
-        self.write('G90 G1 Z22 F3600\n')
-
-    def pen_down(self):
-        self.write('G90 G1 Z26 F3600\n')
+    def pen_down(self, row=None):
+        z = 23
+        if row == 3:
+            z = 23
+        self.write('G90 G1 Z{} F3600\n'.format(z))
         grbl_out = self.serial.readline()
 
     def pen_up(self):
@@ -79,6 +148,14 @@ class PD:
             self.write('G90 G1 Y{y} F3600\n'.format(y=y))
         grbl_out = self.serial.readline()
 
+    def enter_pin(self, pin):
+        # first pen  up
+        self.pen_up()
+
+        # then click each digit
+        for digit in pin:
+            self.press_number(int(digit))
+
     def block_phone(self):
 
         if RPI:
@@ -89,27 +166,31 @@ class PD:
         print('++ attempting to block phone: {}', self.phone)
 
         # first select random pin
-        pin = random.randint(0, 9999)
+        pin = ''
+        for i in range(4):
+            digit = random.randint(1, 9)
+            pin += str(digit)
+        print('++ printing pin: {}'.format(pin))
 
-        # then print pin
-        self.print_pin(pin)
-
-        # pen up
+        # first pen  up
         self.pen_up()
 
-        # then go
-        self.move(x=-20)
-        self.move(y=35)
-        self.click()
-        self.move(y=45)
-        self.move(x=-23)
-        self.click()
+        # then click each digit
+        self.enter_pin(pin)
+        self.enter_pin(pin)
 
         # now go back home
-        time.sleep(2)
         print('++ returning home')
+        self.pen_up()
+        self.move(x=-2, y=2)
+        time.sleep(1)
+
+        # lastly print pin
+        self.print_pin(pin)
+
+        # ideally home the device again
         self.home()
-        print('++ gcode sent')
+        self.pen_up()
 
 
 if __name__ == '__main__':
