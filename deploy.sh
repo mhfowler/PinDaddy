@@ -5,6 +5,6 @@
 git add -A
 git commit -am "Upload"
 git push origin master:master
-ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass --sudo --tags code
-#ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass --sudo
+#ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass --sudo --tags code
+ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass --sudo
 #ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass --sudo --tags code
