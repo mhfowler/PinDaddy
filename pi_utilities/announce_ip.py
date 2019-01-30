@@ -29,7 +29,7 @@ def get_current_connection():
 
 def announce_ip():
     index = 0
-    while index < 200:
+    while index < 5:
         print '++ attempting to announce ip: {}'.format(index)
         try:
             ip_address = get_ip()
