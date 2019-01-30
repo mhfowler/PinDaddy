@@ -172,6 +172,9 @@ class PD:
             pin += str(digit)
         print('++ printing pin: {}'.format(pin))
 
+        # first print the pin
+        self.print_pin(pin)
+
         # first pen  up
         self.pen_up()
 
@@ -184,9 +187,6 @@ class PD:
         self.pen_up()
         self.move(x=-2, y=2)
         time.sleep(1)
-
-        # lastly print pin
-        self.print_pin(pin)
 
         # ideally home the device again
         self.home()
