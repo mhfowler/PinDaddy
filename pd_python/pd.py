@@ -9,9 +9,9 @@ if RPI:
     from pd_python.rotary_test import get_rot_value, rots
 
 phones = {
-    1: 'iphone 6',
-    2: 'iphone 5',
-    3: 'iphone 7+',
+    1: 'iphone 5',
+    2: 'iphone 6',
+    3: 'iphone 7',
     4: 'samsung galaxy'
 }
 
@@ -65,6 +65,14 @@ class PD:
                 'row2y': 37,
                 'column3x': -26,
                 'row3y': 39.5
+            },
+            'iphone 7': {
+                'column1x': -16,
+                'row1y': 36,
+                'column2x': -22,
+                'row2y': 38.5,
+                'column3x': -28,
+                'row3y': 41.5
             }
         }
         if self.phone not in phone_calibrations:
