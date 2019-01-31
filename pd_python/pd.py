@@ -52,7 +52,7 @@ class PD:
         phone_calibrations = {
             'iphone 6': {
                 'column1x': -15.5,
-                'row1y': 36,
+                'row1y': 36.5,
                 'column2x': -21.5,
                 'row2y': 39,
                 'column3x': -28,
