@@ -15,7 +15,8 @@
 echo "test" > {{log_dir}}/test.log
 python -c "print 'test'" > {{log_dir}}/test_python.log
 python {{src_dir}}/pi_utilities/test.py
-export PYTHONPATH={{src_dir}}:$PYTHONPATH
+export PYTHONPATH={{src_dir}}:/home/pi/.local/lib/python3.5/site-packages/:$PYTHONPATH
+export PATH="$PATH:/usr/lib/python35.zip:/usr/lib/python3.5:/usr/lib/python3.5/plat-arm-linux-gnueabihf:/usr/lib/python3.5/lib-dynload:/home/pi/.local/lib/python3.5/site-packages:/usr/local/lib/python3.5/dist-packages:/usr/lib/python3/dist-packages"
 printenv > {{log_dir}}/env.log
 
 # try to connect to the internet and announce ip address

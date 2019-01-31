@@ -4,14 +4,13 @@ import threading
 import random
 
 
-RPI = True
+RPI = False
 if RPI:
     from pd_python.rotary_test import get_rot_value, rots
-    from pyky040 import pyky040
 
 phones = {
     1: 'iphone 6',
-    2: 'iphone 7',
+    2: 'iphone 5',
     3: 'iphone 7+',
     4: 'samsung galaxy'
 }
@@ -53,11 +52,19 @@ class PD:
         phone_calibrations = {
             'iphone 6': {
                 'column1x': -15.5,
-                'row1y': 35.5,
+                'row1y': 36,
                 'column2x': -21.5,
-                'row2y': 38.5,
+                'row2y': 39,
                 'column3x': -28,
-                'row3y': 41.5
+                'row3y': 42
+            },
+            'iphone 5': {
+                'column1x': -16,
+                'row1y': 34,
+                'column2x': -21,
+                'row2y': 37,
+                'column3x': -26,
+                'row3y': 39.5
             }
         }
         if self.phone not in phone_calibrations:
@@ -124,14 +131,14 @@ class PD:
         self.serial.write(msg.encode())
 
     def pen_down(self, row=None):
-        z = 23
+        z = 21.5
         if row == 3:
-            z = 23
+            z = 21.5
         self.write('G90 G1 Z{} F3600\n'.format(z))
         grbl_out = self.serial.readline()
 
     def pen_up(self):
-        self.write('G90 G1 Z20 F3600\n')
+        self.write('G90 G1 Z19 F3600\n')
         grbl_out = self.serial.readline()
 
     def home(self):
