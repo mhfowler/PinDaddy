@@ -4,7 +4,7 @@ import threading
 import random
 
 
-RPI = False
+RPI = True
 if RPI:
     from pd_python.rotary_test import get_rot_value, rots
 
