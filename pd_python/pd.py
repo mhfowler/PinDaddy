@@ -2,11 +2,10 @@ from serial import Serial
 import time
 import threading
 import random
+import argparse, sys
 
 
 RPI = True
-if RPI:
-    from pd_python.rotary_test import get_rot_value, rots
 
 phones = {
     1: 'iphone 5',
@@ -209,9 +208,20 @@ class PD:
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--computer', help='running on laptop')
+    parser.add_argument('--test', help='run in test mode')
+
+    args = parser.parse_args()
+
+    RPI = not args.computer
+    TEST = args.test
+
     pd = PD()
     if RPI:
         import RPi.GPIO as GPIO
+        from pd_python.rotary_test import get_rot_value, rots
 
         try:
 
@@ -226,6 +236,10 @@ if __name__ == '__main__':
             # setup rots
             for rot in rots:
                 GPIO.setup(rot, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+            # if test, then immediately try to block
+            if TEST:
+                pd.block_phone()
 
             print('++ beginning to wait for input')
             while True:
