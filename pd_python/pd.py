@@ -210,8 +210,8 @@ class PD:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--computer', help='running on laptop')
-    parser.add_argument('--test', help='run in test mode')
+    parser.add_argument('--computer', help='running on laptop', action='store_true')
+    parser.add_argument('--test', help='run in test mode', action='store_true')
 
     args = parser.parse_args()
 
