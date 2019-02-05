@@ -283,6 +283,9 @@ class ThermalPrinter:
         dc2_value = (print_break_time << 5) | print_density
         self.send_command('\x12#{0}'.format(chr(dc2_value)))  # DC2 + '#' + value
 
+    def set_upside_down(self):
+        self.send_command('\x1B\x7B\x31')  # ESC + '{' + 0
+
     def reset(self):
         """Reset the printer."""
         # Issue a reset command to the printer. (ESC + @)
