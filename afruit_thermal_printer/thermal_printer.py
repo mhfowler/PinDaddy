@@ -321,6 +321,7 @@ class ThermalPrinter:
         assert 0 <= barcode_type <= 255
         assert 0 <= len(text) <= 255
         self.feed(1)  # Recent firmware can't print barcode w/o feed first???
+        self.send_command('\x1D\x78\x3130')  # set barcode left position
         self.send_command("\x1d\x48\x30")   # no HRI
         self.send_command('\x1Dw\x03')  # Barcode width 3 (0.375/1.0mm thin/thick)
         self.send_command('\x1Dk{0}'.format(chr(barcode_type))) # Barcode type
